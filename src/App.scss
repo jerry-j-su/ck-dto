@@ -1,0 +1,21 @@
+.App {
+    min-width: 680px;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    padding: 10rem 20rem;
+}
+
+.App-header {
+    font-weight: 700;
+}
+
+.App-main {
+    border: 1px solid #ccc;
+    border-radius: .5rem;
+    padding: 2rem 5rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+}

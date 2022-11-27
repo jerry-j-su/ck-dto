@@ -1,0 +1,51 @@
+.search-container {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    .search-placeholder {
+        position: absolute;
+        margin-inline: .7rem;
+        line-height: 2rem;
+        cursor: default;
+        pointer-events: none;
+        opacity: .5;
+    }
+
+    .search-input {
+        flex: 1 0 100%;
+        min-height: 2rem;
+        display: flex;
+        margin: 1rem 0rem .2rem;
+        border: 1px solid #ccc;
+        position: relative;
+        &:focus-within {
+            outline: -webkit-focus-ring-color auto 1px;
+        }
+        input {
+            justify-self: flex-start;
+            flex: 1;
+            display: block;
+            min-width: 30rem;
+            padding: 0 .5rem;
+            border: none;
+            font-size: 1rem;
+            &:focus-visible {
+                outline: none;
+            }
+        }
+        .search-clear {
+            line-height: 2rem;
+            padding: 0 1rem;
+            justify-self: flex-end;
+            cursor :pointer;
+            &:hover {
+                background-color: #EEE;
+            }
+        }
+    }
+
+    .search-notification {
+        padding: 0 .6rem;
+        color: #F66;
+    }
+}
