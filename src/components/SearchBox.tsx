@@ -16,7 +16,7 @@ function validatePriceInput(rawValue: string) {
     return /^\s*\d*\.?\d*\s*$/.test(rawValue)
 }
 
-function InputBox({ value, onInput, clearInput }: { value: string, onInput: FormEventHandler, clearInput: FormEventHandler }) {
+export function InputBox({ value, onInput, clearInput }: { value: string, onInput: FormEventHandler, clearInput: FormEventHandler }) {
     const inputDOM = useRef<HTMLInputElement>(null)
     return (
         <div className="search-input" tabIndex={0}>

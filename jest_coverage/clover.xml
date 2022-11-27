@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<coverage generated="1669584554100" clover="3.2.0">
+  <project timestamp="1669584554100" name="All files">
+    <metrics statements="111" coveredstatements="102" conditionals="47" coveredconditionals="33" methods="37" coveredmethods="34" elements="195" coveredelements="169" complexity="0" loc="111" ncloc="111" packages="3" files="6" classes="6"/>
+    <package name="src">
+      <metrics statements="16" coveredstatements="16" conditionals="5" coveredconditionals="4" methods="7" coveredmethods="7"/>
+      <file name="App.tsx" path="D:\documents\ck-challenge\dto-client\src\App.tsx">
+        <metrics statements="3" coveredstatements="3" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+        <line num="9" count="1" type="stmt"/>
+        <line num="10" count="1" type="stmt"/>
+        <line num="12" count="1" type="stmt"/>
+      </file>
+      <file name="service.ts" path="D:\documents\ck-challenge\dto-client\src\service.ts">
+        <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+        <line num="7" count="1" type="stmt"/>
+        <line num="8" count="1" type="stmt"/>
+        <line num="13" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+      </file>
+      <file name="utils.ts" path="D:\documents\ck-challenge\dto-client\src\utils.ts">
+        <metrics statements="9" coveredstatements="9" conditionals="5" coveredconditionals="4" methods="5" coveredmethods="5"/>
+        <line num="2" count="4" type="cond" truecount="4" falsecount="1"/>
+        <line num="3" count="4" type="stmt"/>
+        <line num="17" count="18" type="stmt"/>
+        <line num="18" count="18" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="24" count="18" type="stmt"/>
+        <line num="26" count="18" type="stmt"/>
+        <line num="27" count="18" type="stmt"/>
+        <line num="30" count="3" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.components">
+      <metrics statements="29" coveredstatements="25" conditionals="18" coveredconditionals="14" methods="9" coveredmethods="8"/>
+      <file name="OrderList.tsx" path="D:\documents\ck-challenge\dto-client\src\components\OrderList.tsx">
+        <metrics statements="7" coveredstatements="6" conditionals="6" coveredconditionals="5" methods="3" coveredmethods="3"/>
+        <line num="7" count="3" type="stmt"/>
+        <line num="9" count="3" type="stmt"/>
+        <line num="10" count="3" type="stmt"/>
+        <line num="11" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="12" count="0" type="stmt"/>
+        <line num="15" count="3" type="stmt"/>
+        <line num="23" count="4" type="stmt"/>
+      </file>
+      <file name="SearchBox.tsx" path="D:\documents\ck-challenge\dto-client\src\components\SearchBox.tsx">
+        <metrics statements="22" coveredstatements="19" conditionals="12" coveredconditionals="9" methods="6" coveredmethods="5"/>
+        <line num="16" count="2" type="stmt"/>
+        <line num="20" count="5" type="stmt"/>
+        <line num="21" count="5" type="stmt"/>
+        <line num="31" count="4" type="stmt"/>
+        <line num="32" count="4" type="stmt"/>
+        <line num="33" count="4" type="stmt"/>
+        <line num="38" count="4" type="stmt"/>
+        <line num="40" count="1" type="stmt"/>
+        <line num="41" count="1" type="stmt"/>
+        <line num="47" count="4" type="stmt"/>
+        <line num="48" count="0" type="stmt"/>
+        <line num="49" count="0" type="stmt"/>
+        <line num="50" count="0" type="stmt"/>
+        <line num="56" count="4" type="stmt"/>
+        <line num="58" count="2" type="stmt"/>
+        <line num="59" count="2" type="stmt"/>
+        <line num="60" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="61" count="1" type="stmt"/>
+        <line num="62" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="63" count="1" type="stmt"/>
+        <line num="65" count="1" type="stmt"/>
+        <line num="69" count="4" type="stmt"/>
+      </file>
+    </package>
+    <package name="src.hooks">
+      <metrics statements="66" coveredstatements="61" conditionals="24" coveredconditionals="15" methods="21" coveredmethods="19"/>
+      <file name="useOrderFlow.ts" path="D:\documents\ck-challenge\dto-client\src\hooks\useOrderFlow.ts">
+        <metrics statements="66" coveredstatements="61" conditionals="24" coveredconditionals="15" methods="21" coveredmethods="19"/>
+        <line num="14" count="1" type="stmt"/>
+        <line num="15" count="1" type="stmt"/>
+        <line num="16" count="1" type="stmt"/>
+        <line num="17" count="1" type="stmt"/>
+        <line num="18" count="1" type="stmt"/>
+        <line num="19" count="1" type="stmt"/>
+        <line num="20" count="1" type="stmt"/>
+        <line num="23" count="1" type="stmt"/>
+        <line num="24" count="1" type="stmt"/>
+        <line num="25" count="1" type="stmt"/>
+        <line num="26" count="1" type="stmt"/>
+        <line num="27" count="1" type="stmt"/>
+        <line num="28" count="1" type="stmt"/>
+        <line num="31" count="1" type="stmt"/>
+        <line num="33" count="1" type="stmt"/>
+        <line num="38" count="1" type="stmt"/>
+        <line num="39" count="2" type="stmt"/>
+        <line num="40" count="2" type="stmt"/>
+        <line num="41" count="2" type="stmt"/>
+        <line num="42" count="2" type="stmt"/>
+        <line num="43" count="2" type="stmt"/>
+        <line num="44" count="2" type="stmt"/>
+        <line num="52" count="1" type="stmt"/>
+        <line num="53" count="1" type="stmt"/>
+        <line num="54" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="57" count="1" type="stmt"/>
+        <line num="58" count="1" type="stmt"/>
+        <line num="59" count="1" type="stmt"/>
+        <line num="66" count="1" type="stmt"/>
+        <line num="67" count="3" type="stmt"/>
+        <line num="68" count="3" type="cond" truecount="1" falsecount="1"/>
+        <line num="70" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="71" count="2" type="stmt"/>
+        <line num="79" count="1" type="stmt"/>
+        <line num="80" count="1" type="stmt"/>
+        <line num="81" count="1" type="cond" truecount="1" falsecount="1"/>
+        <line num="83" count="1" type="stmt"/>
+        <line num="88" count="1" type="stmt"/>
+        <line num="89" count="1" type="cond" truecount="3" falsecount="1"/>
+        <line num="92" count="1" type="stmt"/>
+        <line num="93" count="1" type="stmt"/>
+        <line num="94" count="1" type="stmt"/>
+        <line num="95" count="1" type="stmt"/>
+        <line num="96" count="3" type="cond" truecount="2" falsecount="0"/>
+        <line num="97" count="2" type="stmt"/>
+        <line num="100" count="3" type="stmt"/>
+        <line num="103" count="1" type="stmt"/>
+        <line num="106" count="1" type="stmt"/>
+        <line num="115" count="1" type="stmt"/>
+        <line num="116" count="0" type="stmt"/>
+        <line num="117" count="0" type="stmt"/>
+        <line num="118" count="0" type="stmt"/>
+        <line num="122" count="1" type="stmt"/>
+        <line num="134" count="2" type="stmt"/>
+        <line num="135" count="1" type="cond" truecount="2" falsecount="0"/>
+        <line num="136" count="1" type="stmt"/>
+        <line num="138" count="2" type="cond" truecount="2" falsecount="0"/>
+        <line num="139" count="1" type="stmt"/>
+        <line num="140" count="1" type="stmt"/>
+        <line num="142" count="1" type="stmt"/>
+        <line num="143" count="2" type="stmt"/>
+        <line num="144" count="2" type="cond" truecount="1" falsecount="5"/>
+        <line num="149" count="0" type="stmt"/>
+        <line num="151" count="2" type="stmt"/>
+        <line num="153" count="0" type="stmt"/>
+        <line num="157" count="1" type="stmt"/>
+      </file>
+    </package>
+  </project>
+</coverage>

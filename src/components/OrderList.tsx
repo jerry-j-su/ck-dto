@@ -4,10 +4,7 @@ import useOrderFlow from '../hooks/useOrderFlow'
 import './OrderList.scss'
 
 export default function OrderList () {
-    const { orderList, filteredOrderList, orderCount, setFilteredOrderList } = useOrderFlow()
-    // TODO debug only
-    //@ts-ignore
-    window.uof = useOrderFlow()
+    const { orderList, filteredOrderList, orderCount } = useOrderFlow()
 
     const [ordersToShow, setOrderToShow] = useState(orderList)
     useEffect(() => {
