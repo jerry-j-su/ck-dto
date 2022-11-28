@@ -1,3 +1,6 @@
+@use 'sass:color';
+@use '../theme.scss';
+
 .search-container {
     width: 100%;
     display: flex;
@@ -8,7 +11,7 @@
         line-height: 2rem;
         cursor: default;
         pointer-events: none;
-        opacity: .5;
+        color: color.scale(theme.$font-primary-strong, $blackness: 30%);
     }
 
     .search-input {
@@ -32,20 +35,25 @@
             &:focus-visible {
                 outline: none;
             }
+            color: theme.$font-primary-strong;
+            background-color: color.scale(theme.$dark-bg, $whiteness: 10%);
         }
         .search-clear {
             line-height: 2rem;
             padding: 0 1rem;
             justify-self: flex-end;
             cursor :pointer;
+            color: theme.$font-primary-strong;
+            font-weight: 700;
             &:hover {
-                background-color: #EEE;
+                color: theme.$secondary;
+                background-color: theme.$font-primary-strong;
             }
         }
     }
 
     .search-notification {
         padding: 0 .6rem;
-        color: #F66;
+        color: color.scale(theme.$color-warn-primary, $whiteness: 30%);
     }
 }

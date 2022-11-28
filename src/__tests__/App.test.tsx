@@ -8,12 +8,9 @@ import App from '../App'
 const sideEffectList: Function[] = []
 jest.mock('react', () => {
     const originalModule = jest.requireActual('react')
-
-    //Mock the default export and named export 'foo'
     return {
         __esModule: true,
         ...originalModule,
-        //   default: jest.fn(() => 'mocked baz'),
         useRef: () => ({ current: { value: 'random content' } }),
         useState: (initialValue: any) => [initialValue, () => {}],
         useCallback: () => () => {},
@@ -21,7 +18,7 @@ jest.mock('react', () => {
     }
 })
 const mockConnectOrderFlowSocket = jest.fn()
-jest.mock('../hooks/useOrderFlow', () => ({
+jest.mock('../state/useOrders', () => ({
     __esModule: true,
     default: () => ({
         connectOrderFlowSocket: mockConnectOrderFlowSocket,

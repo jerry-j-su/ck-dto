@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
 
-import useOrderFlow from './hooks/useOrderFlow'
+import useOrders from './state/useOrders'
 import SearchBox from './components/SearchBox';
 import OrderList from './components/OrderList';
 import './App.scss';
 
 function App() {
-    const { connectOrderFlowSocket } = useOrderFlow()
+    const { connectOrderFlowSocket } = useOrders()
     useEffect(() => connectOrderFlowSocket(), [connectOrderFlowSocket])
 
     return (

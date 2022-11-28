@@ -9,30 +9,26 @@ import OrderList from '../components/OrderList'
 // module mocks
 jest.mock('react', () => {
     const originalModule = jest.requireActual('react')
-
-    //Mock the default export and named export 'foo'
     return {
         __esModule: true,
         ...originalModule,
-        //   default: jest.fn(() => 'mocked baz'),
         useRef: () => ({ current: { value: 'random content' } }),
         useState: (initialValue: any) => [initialValue, () => {}],
         useCallback: () => () => {},
         useEffect: () => {},
     }
 })
-jest.mock('../hooks/useOrderFlow', () => ({
+jest.mock('../state/useOrders', () => ({
     __esModule: true,
     default: () => ({
         orderList: mockOrders,
-        setFilterCriteria: () => { console.log('set filter criteria ')},
+        setFilterCriteria: () => {},
     })
 }))
 // data mocks
 const mockOrders = JSON.parse(readFileSync(`${__dirname}/dummyOrders.json`, { encoding: 'utf-8' }))
 
 describe('High-level Component render before actual DOM', () => {
-
     test('SearchBox Input box basic render', () => {
         const onInput = jest.fn()
         const clearInput = jest.fn()

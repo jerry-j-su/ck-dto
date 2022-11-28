@@ -1,4 +1,4 @@
-import { simpleUID, tailingDebounce } from "../utils";
+import { simpleUID, tailingDebounce } from '../utils';
 
 describe('Utilities and helpers', () => {
 

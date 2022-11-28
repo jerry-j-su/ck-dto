@@ -4,7 +4,7 @@ FormEvent, FormEventHandler,
 } from 'react'
 
 import { tailingDebounce } from '../utils'
-import useOrders from '../hooks/useOrderFlow'
+import useOrders from '../state/useOrders'
 import './SearchBox.scss'
 
 /**
@@ -37,9 +37,9 @@ export default function SearchBox() {
      */
     const performSearch = useCallback( // eslint-disable-line react-hooks/exhaustive-deps
         tailingDebounce((price?: number) => {
-            console.log(`searching price: ${price}`)
+            // console.log(`searching price: ${price}`)
             setFilterCriteria({ price })
-        }, 500),
+        }, 250),
         [setFilterCriteria]
     )
 

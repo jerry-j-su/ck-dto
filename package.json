@@ -47,7 +47,6 @@
     "react-dev-utils": "^12.0.1",
     "react-dom": "^18.2.0",
     "react-refresh": "^0.11.0",
-    "react-use": "^17.4.0",
     "resolve": "^1.20.0",
     "resolve-url-loader": "^4.0.0",
     "sass": "^1.56.1",
@@ -96,15 +95,15 @@
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
       "!src/**/*.d.ts",
-      "!src/index.{js,jsx,ts,tsx}",
+      "!src/**/index.{js,jsx,ts,tsx}",
       "!src/**/types.ts"
     ],
-    "coverageDirectory": "jest_coverage",
+    "coverageDirectory": "ut_coverage",
     "setupFiles": [
       "react-app-polyfill/jsdom"
     ],
     "setupFilesAfterEnv": [
-      "<rootDir>/src/setupTests.ts"
+      "<rootDir>/src/jest.setup.ts"
     ],
     "testMatch": [
       "<rootDir>/src/**/__tests__/**/*.{js,jsx,ts,tsx}",
@@ -141,7 +140,8 @@
       "jest-watch-typeahead/filename",
       "jest-watch-typeahead/testname"
     ],
-    "resetMocks": true
+    "resetMocks": true,
+    "verbose": true
   },
   "babel": {
     "presets": [
