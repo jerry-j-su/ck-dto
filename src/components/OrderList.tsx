@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react'
 
-import useOrderFlow from '../hooks/useOrderFlow'
+import useOrders from '../state/useOrders'
 import './OrderList.scss'
 
 export default function OrderList () {
-    const { orderList, filteredOrderList, orderCount } = useOrderFlow()
+    const { orderList, filteredOrderList, orderCount } = useOrders()
 
     const [ordersToShow, setOrderToShow] = useState(orderList)
     useEffect(() => {

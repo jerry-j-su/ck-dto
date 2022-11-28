@@ -1,46 +1,65 @@
-# Getting Started with Create React App
+# Cloud Kitchen DTO Client
+- [Quick Start](#quick-start)
+- [Tests](#tests)
+- [Features](#features)
+  - [Overall data flow](#overall-data-flow)
+  - [Socket service layer](#socket-service-layer)
+  - [App state](#app-state)
+  - [View components](#view-components)
+  - [Style](#style)
+- [Build](#build)
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Quick Start
+In the project directory, run:
+```
+npm install
+```
+After the installation, run:
+```
+npm run start
+```
+The app will start in the development mode via:  
+[http://localhost:3000](http://localhost:3000)  
+view it in the browser with the data sever (NOT included in this repository) running at [http://localhost:4000](http://localhost:4000) to feed the client with order stream
 
-## Available Scripts
+## Tests
+run
+```
+npm run test
+```
+to launch the test runner  
+or  run
+```
+npm run test-coverage
+```
+for coverage report (under `/ut_coverage`)  
+Current rate by statements: *86.42%*  
+After test run, open this [lcov report](/ut_coverage/lcov-report/index.html) with browser to review the current UT coverage
 
-In the project directory, you can run:
+## Features
+### Overall data flow
+Order flow server -> socket service layer -> app state -> Rendered by `<OrderList />` Component
+### Socket service layer
+see [src/service.ts](src/service.ts)  
+Connects backend server and receives order packets stream  
+> [TODO] Buffer/Cache mechanism for high TPS stream
+### App state
+see [src/state/useOrderFlow.ts](src/state/useOrderFlow.ts)  
+Customized hook to store App state,  
+With handlers to add, update and filter orders as required   
+> currently there is only order-related state as it is a simple app
+### View components
+- `<SearchBox />`  
+see [src/components/SearchBox.tsx](src/components/SearchBox.tsx)  
+For user to quickly filter orders by typed amount  
+Simple UI validation  
+Debounced search to avoid costly re-render caused by user input  
+- `<OrderList />`  
+see [src/components/OrderList.tsx](src/components/OrderList.tsx)  
+Shows all orders as required, or filtered ones upon user query
+### Style
+Basic style via **Sass** preprocessor
+ 
 
-### `npm start`
-
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
-
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
-
-### `npm test`
-
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+## Build
+Not covered here since it is a quick challenge. No production requirement is in-scoped

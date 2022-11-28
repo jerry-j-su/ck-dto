@@ -3,7 +3,6 @@
  */
  import io from 'socket.io-client'
 
-/* Socket handshake configuration */
 const SocketURL = 'http://localhost:4000'
 const ClientSocketConfig = {
     // secure: true,
@@ -15,5 +14,5 @@ export const OrderEvent = {
     NewOrder: 'order_event',
 }
 
-// Socket singleton
+// Socket Service singleton
 export const orderFlowSocket = io(SocketURL, ClientSocketConfig)

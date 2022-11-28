@@ -2,22 +2,21 @@
  * Order flow layer
  */
 import { useEffect, useCallback } from 'react'
-import { createGlobalState } from 'react-use'
 
+import { simpleUID, createGlobalPersistentState } from '../utils'
 import { OrderType, OrderFilterCriteria } from '../types'
 import { OrderEvent, orderFlowSocket } from '../service'
-import { simpleUID  } from '../utils'
 
 /**
  * Globalized order states
  */
-const useSocketConnection = createGlobalState<boolean>(() => false)
-const useGlobalOrderMap = createGlobalState<Map<string, number>>(() => new Map())
-const useGlobalOrderList = createGlobalState<OrderType[]>(() => [])
-const useOrderCount = createGlobalState<number>(() => 0)
-const useFilterCriteria = createGlobalState<OrderFilterCriteria>(() => ({}))
-const useFilteredOrderList = createGlobalState<OrderType[] | undefined>(() => [])
-const useLastUpdate = createGlobalState<number>(() => Date.now())
+const useSocketConnection = createGlobalPersistentState<boolean>(() => false)
+const useGlobalOrderMap = createGlobalPersistentState<Map<string, number>>(() => new Map())
+const useGlobalOrderList = createGlobalPersistentState<OrderType[]>(() => [])
+const useOrderCount = createGlobalPersistentState<number>(() => 0)
+const useFilterCriteria = createGlobalPersistentState<OrderFilterCriteria>(() => ({}))
+const useFilteredOrderList = createGlobalPersistentState<OrderType[] | undefined>(() => [])
+const useLastUpdate = createGlobalPersistentState<number>(() => Date.now())
 
 export default function useOrders() {
     const [socketConnected, setConnection] = useSocketConnection()
@@ -77,7 +76,6 @@ export default function useOrders() {
      * TODO cleanup on unmount
      * */
     const connectOrderFlowSocket = useCallback(() => {
-        console.log(socketConnected)
         if (socketConnected) return // connect only once
 
         orderFlowSocket.emit(OrderEvent.Connect, {
@@ -115,9 +113,7 @@ export default function useOrders() {
     useEffect(() => {
         const filteredList = filterOrderListBy(orderList, filterCriteria);
         setFilteredOrderList(filteredList)
-        console.log(filteredList)
-    }, [orderList, filterCriteria, setFilteredOrderList])
-    // }, [orderList, filterCriteria, lastUpdate])
+    }, [orderList, orderList.length, filterCriteria, setFilteredOrderList])
 
     return {
         orderMap, orderList, filteredOrderList, orderCount,
@@ -136,7 +132,6 @@ export function filterOrderListBy(orderList: OrderType[], filterCriteria: OrderF
         .map(([prop]) => prop)
 
     if (!propsToApply.length) {
-        console.log('clearing filters')
         return undefined
     }
     const filteredList = orderList.filter((orderEntry: OrderType) => {

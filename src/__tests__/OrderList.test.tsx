@@ -1,7 +1,6 @@
 import React from 'react'
 
 import OrderList from '../components/OrderList'
-import useOrderFlow from '../hooks/useOrderFlow'
 
 // module mocks
 const mockSetStateFunc = jest.fn()
@@ -17,7 +16,7 @@ jest.mock('react', () => {
 })
 const mockOrderList = [1]
 const mockFilteredOrderList = [2, 4]
-jest.mock('../hooks/useOrderFlow', () => ({
+jest.mock('../state/useOrders', () => ({
     __esModule: true,
     default: () => ({
         orderList: mockOrderList,

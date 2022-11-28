@@ -1,9 +1,10 @@
 import { readFileSync } from 'fs'
 
-import { orderFlowSocket, OrderEvent } from '../service'
-import useOrderFlow, { filterOrderListBy } from '../hooks/useOrderFlow'
+import { orderFlowSocket } from '../service'
+import useOrders, { filterOrderListBy } from '../state/useOrders'
 
 const sideEffectList: Function[] = []
+const sideLayoutEffectList: Function[] = []
 // module mocks
 jest.mock('react', () => {
     const originalModule = jest.requireActual('react')
@@ -14,24 +15,14 @@ jest.mock('react', () => {
         useState: (initialValue: any) => [initialValue, () => {}],
         useCallback: (cb: Function) => cb,
         useEffect: (cb: Function) => sideEffectList.push(cb),
-    }
-})
-jest.mock('react-use', () => {
-    const originalModule = jest.requireActual('react-use')
-    return {
-        __esModule: true,
-        ...originalModule,
-        createGlobalState: (initialize: Function) => () => [initialize(), () => {}],
+        useLayoutEffect: (cb: Function) => sideLayoutEffectList.push(cb),
     }
 })
 // data mocks
 const mockOrders = JSON.parse(readFileSync(`${__dirname}/dummyOrders.json`, { encoding: 'utf-8' }))
 
 describe('Test for useOderFlow.ts', () => {
-    const { orderMap, orderList, connectOrderFlowSocket, setFilteredOrderList } = useOrderFlow();
-    // beforeEach(() => {
-    //     jest.spyOn(useOrderFlow, 'orderFlowSocket').mockImplementation()
-    // })
+    const { orderMap, orderList, connectOrderFlowSocket } = useOrders();
 
     test('new order can be registered, same order can be updated', () => {
 

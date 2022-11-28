@@ -18,7 +18,7 @@ jest.mock('react', () => {
     }
 })
 const mockSetFilterCriteria = jest.fn()
-jest.mock('../hooks/useOrderFlow', () => ({
+jest.mock('../state/useOrders', () => ({
     __esModule: true,
     default: () => ({
         orderList: mockOrders,
