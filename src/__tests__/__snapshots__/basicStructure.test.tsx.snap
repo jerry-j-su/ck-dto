@@ -5,14 +5,11 @@ exports[`High-level Component render before actual DOM Order List basic render 1
   <section
     class="order-list-container"
   >
-    <dl>
-      <dl>
-        Count: 
-      </dl>
-      <dl>
-        Filter Count: 
-      </dl>
-    </dl>
+    <span
+      class="order-count"
+    >
+      Total undefined orders
+    </span>
     <ul
       class="order-list-body"
     >

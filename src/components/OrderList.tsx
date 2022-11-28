@@ -14,10 +14,12 @@ export default function OrderList () {
 
     return (
         <section className="order-list-container">
-            <dl>
-                <dl>Count: {orderCount}</dl>
-                <dl>Filter Count: {filteredOrderList && filteredOrderList.length}</dl>
-            </dl>
+            <span className="order-count">
+                {filteredOrderList
+                    ? `Showing ${filteredOrderList && filteredOrderList.length} of ${orderCount} orders`
+                    : `Total ${orderCount} orders`
+                }
+            </span>
             <ul className="order-list-body">
                 {ordersToShow && ordersToShow.map(({ id, customer, destination, 'event_name': status, item, price, 'sent_at_second': time }) => (
                     <li className="order-wrapper" key={`${id}-${status}`}>

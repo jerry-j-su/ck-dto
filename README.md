@@ -33,7 +33,7 @@ or  run
 npm run test-coverage
 ```
 for coverage report (under `/ut_coverage`)  
-Current rate by statements: *86.42%*  
+Current rate by statements: *85.49%*  
 After test run, open this [lcov report](/ut_coverage/lcov-report/index.html) with browser to review the current UT coverage
 
 ## Features

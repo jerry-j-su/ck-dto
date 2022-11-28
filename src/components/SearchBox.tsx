@@ -37,7 +37,7 @@ export default function SearchBox() {
      */
     const performSearch = useCallback( // eslint-disable-line react-hooks/exhaustive-deps
         tailingDebounce((price?: number) => {
-            console.log(`searching price: ${price}`)
+            // console.log(`searching price: ${price}`)
             setFilterCriteria({ price })
         }, 250),
         [setFilterCriteria]

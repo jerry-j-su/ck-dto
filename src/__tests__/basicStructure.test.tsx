@@ -22,7 +22,7 @@ jest.mock('../state/useOrders', () => ({
     __esModule: true,
     default: () => ({
         orderList: mockOrders,
-        setFilterCriteria: () => { console.log('set filter criteria ')},
+        setFilterCriteria: () => {},
     })
 }))
 // data mocks

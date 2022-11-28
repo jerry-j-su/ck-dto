@@ -87,19 +87,18 @@ export default function useOrders() {
             if (!orderPacket || !orderPacket.length) return
 
             // TODO caching mechanism
-            const packetCount = orderPacket.length
-            const secondStamp = orderPacket[0]['sent_at_second']
-            let newOrder = 0
+            // const packetCount = orderPacket.length
+            // const secondStamp = orderPacket[0]['sent_at_second']
+            // let newOrder = 0
             orderPacket.forEach((orderEntry: OrderType) => {
-                if (!orderMap.has(orderEntry.id)) {
-                    newOrder ++
-                }
+                // if (!orderMap.has(orderEntry.id)) {
+                //     newOrder ++
+                // }
                 // TODO basic order validation
                 processSingleOrder(orderEntry)
             })
 
-            console.log(`>>> Received ${newOrder} new orders and updated ${packetCount - newOrder} at second: ${secondStamp}`)
-            // console.log(JSON.stringify(orderPacket, null, 2))
+            // console.log(`>>> Received ${newOrder} new orders and updated ${packetCount - newOrder} at second: ${secondStamp}`)
         })
         setConnection(true)
     /* eslint-disable-next-line react-hooks/exhaustive-deps  */
