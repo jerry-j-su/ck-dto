@@ -1,6 +1,7 @@
+@use 'sass:color';
+@use '../theme.scss';
+
 .order-list-container {
-
-
     .order-list-body {
         padding: 0;
         list-style-type: none;
@@ -9,7 +10,7 @@
     }
 
     .order-wrapper {
-        border: 1px solid #DDD;
+        border: 1px solid color.scale(theme.$border-fade, $blackness: 30%);
         border-radius: .2px;
         margin: .2rem;
         dl {
@@ -34,15 +35,21 @@
             }
             .label {
                 font-size: .6rem;
-                color: #AAA;
+                color: theme.$font-fade;
                 vertical-align: middle;
             }
             .value {
-                &.name, &.price {
+                &.name {
                     font-weight: 700;
                 }
                 &.status, &.items {
                     font-size: .8rem;
+                }
+                &.name {
+                    color: theme.$font-primary-strong;
+                }
+                &.price {
+                    color: theme.$highlight;
                 }
             }
             dt {
@@ -56,12 +63,12 @@
 
             .name-spacer {
                 flex: 1 0 90%;
-                border-bottom: 1px dashed #DDD;
+                border-bottom: 1px dashed color.scale(theme.$border-fade, $blackness: 50%);
                 margin: 0 1rem 0.2rem 1rem;
             }
             .status-spacer {
                 flex: 0 0 auto;
-                border-left: 1px dashed #DDD;
+                border-left: 1px dashed color.scale(theme.$border-fade, $blackness: 50%);
                 margin: .7rem 0;
             }
             .spacer {

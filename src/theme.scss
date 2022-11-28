@@ -1,0 +1,27 @@
+// Very basic theming for the app
+
+/* Font */
+
+
+
+
+/* Colors */
+$dark-bg: #050d22;
+$bg-front: #0c162d;
+$font-primary-strong: #19c2c4;
+$primary: #4a9d68;
+$secondary: #4b68f3;
+$secondary-fade: #6984e4;
+$font-fade: #6c7892;
+$highlight: #f3f4ee;
+
+$border: #ccc;
+$border-fade: $font-fade;
+
+$color-warn-primary: #f78166;
+
+* {
+    color: $primary;
+}
+
+/* Animations */
