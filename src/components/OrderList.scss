@@ -2,10 +2,26 @@
 @use '../theme.scss';
 
 .order-list-container {
+    min-height: 0;
+    overflow: hidden auto;
+    &::-webkit-scrollbar {
+        width: 5px;
+        height: 5px;
+    }
+    &::-webkit-scrollbar-track {
+        border-radius: 2px;
+        background-color: color.scale(theme.$bg-front, $whiteness: 7%);
+    }
+    &::-webkit-scrollbar-thumb {
+        border-radius: 2px;
+        background-color: theme.$font-primary-strong;
+    }
+
     .order-count {
         font-size: .8rem;
         color: theme.$font-fade;
     }
+
     .order-list-body {
         padding: 0;
         list-style-type: none;
@@ -17,48 +33,63 @@
         border: 1px solid color.scale(theme.$border-fade, $blackness: 30%);
         border-radius: .2px;
         margin: .2rem;
+
         dl {
             display: flex;
             flex-wrap: wrap;
             margin: 0;
             padding: .5rem 0;
-            .top-row, .col-1, .col-2 {
+
+            .top-row,
+            .col-1,
+            .col-2 {
                 padding: .2rem .5rem;
             }
+
             .top-row {
                 flex: 1 0 100%;
             }
+
             .col-1 {
                 flex: 0 1 15%;
                 display: flex;
                 justify-content: center;
                 align-items: center;
             }
+
             .col-2 {
                 flex: 1 0 auto;
             }
+
             .label {
                 font-size: .6rem;
                 color: theme.$font-fade;
                 vertical-align: middle;
             }
+
             .value {
                 &.name {
                     font-weight: 700;
                 }
-                &.status, &.items {
+
+                &.status,
+                &.items {
                     font-size: .8rem;
                 }
+
                 &.name {
                     color: theme.$font-primary-strong;
                 }
+
                 &.price {
                     color: theme.$highlight;
                 }
             }
+
             dt {
                 display: inline;
             }
+
             dd {
                 display: inline;
                 margin-inline-start: .5rem;
@@ -70,11 +101,13 @@
                 border-bottom: 1px dashed color.scale(theme.$border-fade, $blackness: 50%);
                 margin: 0 1rem 0.2rem 1rem;
             }
+
             .status-spacer {
                 flex: 0 0 auto;
                 border-left: 1px dashed color.scale(theme.$border-fade, $blackness: 50%);
                 margin: .7rem 0;
             }
+
             .spacer {
                 margin-block: .5rem;
             }
