@@ -3,7 +3,7 @@
  */
 import { useEffect, useCallback } from 'react'
 
-import { simpleUID, createGlobalPersistentState } from '../utils'
+import { simpleUID, createGlobalPersistentState, reverseIndexMap } from '../utils'
 import { OrderType, OrderFilterCriteria } from '../types'
 import { OrderEvent, orderFlowSocket } from '../service'
 
@@ -17,6 +17,13 @@ const useOrderCount = createGlobalPersistentState<number>(() => 0)
 const useFilterCriteria = createGlobalPersistentState<OrderFilterCriteria>(() => ({}))
 const useFilteredOrderList = createGlobalPersistentState<OrderType[] | undefined>(() => [])
 const useLastUpdate = createGlobalPersistentState<number>(() => Date.now())
+
+/**
+ * Reverse Index for search
+ */
+const priceMap = reverseIndexMap<OrderType['price'], number>()
+// @ts-ignore
+window.priceMap = priceMap
 
 export default function useOrders() {
     const [socketConnected, setConnection] = useSocketConnection()
@@ -35,11 +42,12 @@ export default function useOrders() {
      * Register a new order
      */
     const pushOrder = (orderEntry: OrderType) => {
-        const { id, ...rest } = orderEntry
-        orderList.push({ id, ...rest })
+        const { id, price, ...rest } = orderEntry
+        orderList.push({ id, price, ...rest })
         setOrderList(orderList)
         orderMap.set(id, orderList.length - 1)
         setOrderMap(orderMap)
+        priceMap.put(price, orderList.length - 1)
         setLastUpdate(new Date().valueOf())
     }
 
@@ -110,7 +118,7 @@ export default function useOrders() {
      * @param {OrderFilterCriteria} criteria
      */
     useEffect(() => {
-        const filteredList = filterOrderListBy(orderList, filterCriteria);
+        const filteredList = filterOrderListByPrice(orderList, filterCriteria.price);
         setFilteredOrderList(filteredList)
     }, [orderList, orderList.length, filterCriteria, setFilteredOrderList])
 
@@ -123,30 +131,10 @@ export default function useOrders() {
 /**
  * Filter the order list under given criteria
  * @param {OrderType[]} orderList
- * @param {OrderFilterCriteria} filterCriteria
+ * @param {OrderType.price} price
  */
-export function filterOrderListBy(orderList: OrderType[], filterCriteria: OrderFilterCriteria) {
-    const propsToApply = Object.entries(filterCriteria)
-        .filter(([prop, value]) => Object.hasOwnProperty.call(filterCriteria, prop) && value)
-        .map(([prop]) => prop)
-
-    if (!propsToApply.length) {
-        return undefined
-    }
-    const filteredList = orderList.filter((orderEntry: OrderType) => {
-        return propsToApply.every(prop => {
-            switch(prop) {
-                case 'customer':
-                case 'destination':
-                case 'item':
-                case 'event_name':
-                    return orderEntry[prop].includes(filterCriteria[prop] as string)
-                case 'price':
-                    return orderEntry[prop] === filterCriteria[prop]
-                default:
-                    return false
-            }
-        })
-    })
-    return filteredList
+export function filterOrderListByPrice(orderList: OrderType[], price?: OrderType['price']) {
+    if (typeof price !== 'number') return undefined
+    const indexes =  priceMap.get(price)
+    return Array.isArray(indexes) ? indexes.map(index => orderList[index]) : []
 }

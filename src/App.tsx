@@ -6,7 +6,7 @@ import OrderList from './components/OrderList';
 import './App.scss';
 
 function App() {
-    const { connectOrderFlowSocket } = useOrders()
+    const { orderList, filteredOrderList, orderCount, connectOrderFlowSocket } = useOrders()
     useEffect(() => connectOrderFlowSocket(), [connectOrderFlowSocket])
 
     return (
@@ -14,7 +14,14 @@ function App() {
             <header className="App-header"></header>
             <main className="App-main">
                 <SearchBox />
-                <OrderList />
+                <span className="order-count">
+                    {filteredOrderList
+                        ? `Showing ${filteredOrderList && filteredOrderList.length} of ${orderCount} orders`
+                        : `Total ${orderCount} orders`
+                    }
+                </span>
+                <OrderList orders={orderList} containerClassName={filteredOrderList ? 'hidden' : ''} />
+                <OrderList orders={filteredOrderList} containerClassName={filteredOrderList ? '' : 'hidden'} />
             </main>
         </div>
     );

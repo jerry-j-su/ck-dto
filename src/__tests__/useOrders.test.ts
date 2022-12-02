@@ -1,7 +1,7 @@
 import { readFileSync } from 'fs'
 
 import { orderFlowSocket } from '../service'
-import useOrders, { filterOrderListBy } from '../state/useOrders'
+import useOrders, { filterOrderListByPrice } from '../state/useOrders'
 
 const sideEffectList: Function[] = []
 const sideLayoutEffectList: Function[] = []
@@ -38,13 +38,13 @@ describe('Test for useOderFlow.ts', () => {
 
     test('orders can be filtered by price', () => {
         const expectedEntry = mockOrders[2]
-        const filteredList = filterOrderListBy(orderList, { price: expectedEntry.price })
+        const filteredList = filterOrderListByPrice(orderList, expectedEntry.price)
         expect(filteredList?.length).toBe(1)
         expect(filteredList && filteredList[0]).toEqual(expectedEntry)
     })
 
     test('empty or invalid filter criteria removes the filtered order list', () => {
-        let filteredList = filterOrderListBy(orderList, {})
+        let filteredList = filterOrderListByPrice(orderList)
         expect(filteredList).toBe(undefined)
     })
 })
