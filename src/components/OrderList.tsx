@@ -8,11 +8,11 @@ type OrderListProps = {
     containerClassName?: string,
 }
 
-export default function OrderList({ orders, containerClassName }: OrderListProps) {
+export default React.forwardRef(({ orders, containerClassName }: OrderListProps, ref: any) => {
     if (!Array.isArray(orders)) return null
 
     return (
-        <section className={['order-list-container', containerClassName || ''].join(' ')}>
+        <section className={['order-list-container', containerClassName || ''].join(' ')} ref={ref}>
             <ul className="order-list-body">
                 {orders.map(({ id, customer, destination, 'event_name': status, item, price, 'sent_at_second': time }) => (
                     <li className="order-wrapper" key={`${id}-${status}`}>
@@ -40,4 +40,4 @@ export default function OrderList({ orders, containerClassName }: OrderListProps
             </ul>
         </section>
     )
-}
+})

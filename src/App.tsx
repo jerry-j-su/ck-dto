@@ -3,7 +3,10 @@ import React, { useEffect } from 'react';
 import useOrders from './state/useOrders'
 import SearchBox from './components/SearchBox';
 import OrderList from './components/OrderList';
+import scrollableHOC from './components/scrollableHOC';
 import './App.scss';
+
+const ScrollableOrderList = scrollableHOC(OrderList)
 
 function App() {
     const { orderList, filteredOrderList, orderCount, connectOrderFlowSocket } = useOrders()
@@ -20,7 +23,7 @@ function App() {
                         : `Total ${orderCount} orders`
                     }
                 </span>
-                <OrderList orders={orderList} containerClassName={filteredOrderList ? 'hidden' : ''} />
+                <ScrollableOrderList orders={orderList} containerClassName={filteredOrderList ? 'hidden' : ''} />
                 <OrderList orders={filteredOrderList} containerClassName={filteredOrderList ? '' : 'hidden'} />
             </main>
         </div>
