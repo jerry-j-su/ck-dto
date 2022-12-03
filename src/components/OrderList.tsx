@@ -1,20 +1,33 @@
-import React from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 
 import { OrderType } from '../types'
+import { ScrollableContainerExtraProps } from './scrollableHOC'
 import './OrderList.scss'
 
 type OrderListProps = {
-    orders?: OrderType[],
+    orders: OrderType[],
     containerClassName?: string,
 }
+const UpdateBatchSize = 20
 
-export default React.forwardRef(({ orders, containerClassName }: OrderListProps, ref: any) => {
-    if (!Array.isArray(orders)) return null
+export default React.forwardRef(({ orders, containerClassName, holdAppendChild }: OrderListProps & ScrollableContainerExtraProps, ref: any) => {
+
+    const [renderCount, setRenderCount] = useState<number>(0)
+    useEffect(() => {
+        if (holdAppendChild) return
+        if (renderCount < orders.length) {
+            setRenderCount(renderCount + UpdateBatchSize)
+        }
+    }, [holdAppendChild, orders, orders.length, renderCount, setRenderCount])
+
+    const ordersToShow = useMemo(() => {
+        return orders.slice(0, renderCount)
+    }, [orders, orders.length, renderCount]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
         <section className={['order-list-container', containerClassName || ''].join(' ')} ref={ref}>
             <ul className="order-list-body">
-                {orders.map(({ id, customer, destination, 'event_name': status, item, price, 'sent_at_second': time }) => (
+                {ordersToShow.map(({ id, customer, destination, 'event_name': status, item, price, 'sent_at_second': time }) => (
                     <li className="order-wrapper" key={`${id}-${status}`}>
                         <dl>
                             <div className="top-row">

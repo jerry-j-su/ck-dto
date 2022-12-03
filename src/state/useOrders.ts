@@ -41,7 +41,7 @@ export default function useOrders() {
     /**
      * Register a new order
      */
-    const pushOrder = (orderEntry: OrderType) => {
+    const addOrder = (orderEntry: OrderType) => {
         const { id, price, ...rest } = orderEntry
         orderList.push({ id, price, ...rest })
         setOrderList(orderList)
@@ -75,7 +75,7 @@ export default function useOrders() {
         if (!id) return
 
         if (orderMap.has(id)) updateOrder(id, orderEntry)
-        else pushOrder(orderEntry)
+        else addOrder(orderEntry)
     }
 
     /**

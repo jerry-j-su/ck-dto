@@ -24,7 +24,7 @@ function App() {
                     }
                 </span>
                 <ScrollableOrderList orders={orderList} containerClassName={filteredOrderList ? 'hidden' : ''} />
-                <OrderList orders={filteredOrderList} containerClassName={filteredOrderList ? '' : 'hidden'} />
+                {filteredOrderList && <OrderList orders={filteredOrderList} containerClassName={filteredOrderList ? '' : 'hidden'} />}
             </main>
         </div>
     );
