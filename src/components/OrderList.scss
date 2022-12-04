@@ -121,6 +121,13 @@
                 margin-block: .5rem;
             }
         }
+
+        &.scaffold {
+            min-height: 3rem;
+        }
+        &.end {
+            min-height: 2rem;
+        }
     }
 }
 

@@ -8,7 +8,7 @@ type OrderListProps = {
     orders: OrderType[],
     containerClassName?: string,
 }
-const UpdateBatchSize = 20
+const UpdateBatchSize = 3  // how many buffered records to attach to DOM tree if user scroll down to the bottom of the page
 
 export default React.forwardRef(({ orders, containerClassName, holdAppendChild }: OrderListProps & ScrollableContainerExtraProps, ref: any) => {
 
@@ -50,6 +50,14 @@ export default React.forwardRef(({ orders, containerClassName, holdAppendChild }
                         </dl>
                     </li>
                 ))}
+                {renderCount < orders.length
+                    ? (<>
+                        <li className="order-wrapper scaffold">Rendering...</li>
+                        <li className="order-wrapper scaffold">Rendering...</li>
+                        <li className="order-wrapper scaffold">Rendering...</li>
+                      </>)
+                    : <li className="order-wrapper end">Pending on data...</li>
+                }
             </ul>
         </section>
     )

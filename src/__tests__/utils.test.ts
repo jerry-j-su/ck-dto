@@ -1,4 +1,4 @@
-import { simpleUID, tailingDebounce } from '../utils';
+import { simpleUID, debounce } from '../utils';
 
 describe('Utilities and helpers', () => {
 
@@ -14,12 +14,12 @@ describe('Utilities and helpers', () => {
         expect(uid2).not.toBe(uid3)
     })
 
-    test('tailingDebounce and debounce a frequent action a tailing-edge manner', async () => {
+    test('debounce helper and debounce a frequent action a trailing-edge manner', async () => {
         let i = 0;
         let j = 0
         const bumpI = () => i ++
         const bumpJ = () => j ++
-        const debouncedBumpI = tailingDebounce(bumpI, 500)
+        const debouncedBumpI = debounce(bumpI, 500)
 
         const timerId = setInterval(() => {
             // "i ++ is debounced', while 'j ++' is not
@@ -33,7 +33,7 @@ describe('Utilities and helpers', () => {
             }, 2000)
         })
         expect(10).toBeLessThan(j)
-        // tailing, so the execution of i ++ will NOT invoke before the first wait is reached
+        // trailing, so the execution of i ++ will NOT invoke before the first wait is reached
         expect(i).toBe(0)
         // wait until the debounce waiting finishes and invoke the bumpI
         await new Promise<void>(resolve => {

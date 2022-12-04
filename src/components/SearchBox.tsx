@@ -3,7 +3,7 @@ useCallback, useState, useRef,
 FormEvent, FormEventHandler,
 } from 'react'
 
-import { tailingDebounce } from '../utils'
+import { debounce } from '../utils'
 import useOrders from '../state/useOrders'
 import './SearchBox.scss'
 
@@ -33,13 +33,13 @@ export default function SearchBox() {
     const { setFilterCriteria } = useOrders()
 
     /**
-     * Perform an order search, debounced, tailing, 500ms
+     * Perform an order search, debounced, trailing, 500ms
      */
     const performSearch = useCallback( // eslint-disable-line react-hooks/exhaustive-deps
-        tailingDebounce((price?: number) => {
+        debounce((price?: number) => {
             // console.log(`searching price: ${price}`)
             setFilterCriteria({ price })
-        }, 250),
+        }, 250, { trailing: true }),
         [setFilterCriteria]
     )
 

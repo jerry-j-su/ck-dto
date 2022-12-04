@@ -27,7 +27,7 @@ jest.mock('../state/useOrders', () => ({
 }))
 jest.mock('../utils', () => ({
     __esModule: true,
-    tailingDebounce: (func: Function) => func,
+    debounce: (func: Function) => func,
 }))
 // data mocks
 const mockOrders = JSON.parse(readFileSync(`${__dirname}/dummyOrders.json`, { encoding: 'utf-8' }))

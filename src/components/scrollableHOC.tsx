@@ -3,7 +3,7 @@
  */
 import React, { useEffect, useRef, useState, useCallback } from 'react'
 
-import { mergeClassNames, observeDOM, tailingDebounce } from '../utils/misc'
+import { mergeClassNames, observeDOM, throttle } from '../utils/misc'
 
 enum ScrollType {
     auto = 'auto',
@@ -46,7 +46,24 @@ const DEFAULT_OPTIONS: ScrollableOptions = {
     style: DEFAULT_STYLE,
 }
 Object.freeze(DEFAULT_OPTIONS)
+const DEFAULT_VIEW_POSITION = { atTop: true, toBottom: ToBottom.InRange }
 
+function calculateViewPosition (containerDOM: HTMLElement, contentDOM: HTMLElement): ViewPosition {
+    if (!(containerDOM instanceof HTMLElement) || !(contentDOM instanceof HTMLElement)) return DEFAULT_VIEW_POSITION
+
+    // console.log('calculating view position')
+    const { scrollTop } = containerDOM
+    const { height: containerH } = containerDOM.getBoundingClientRect()
+    const { height: contentH } = contentDOM.getBoundingClientRect()
+    // make sure the contain has no padding nor margin
+    const remainingH = Math.max(Math.floor(contentH - (scrollTop + containerH)), 0)
+    const atTop = scrollTop <= 30
+
+    if (remainingH <= 0) return { atTop, toBottom: ToBottom.InRange }
+    if (remainingH <= 2 * containerH) return { atTop, toBottom: ToBottom.Near }
+    return { atTop, toBottom: ToBottom.Far }
+}
+const debouncedCalculateViewPosition = throttle<ViewPosition>(calculateViewPosition, 100)
 
 export default function scrollableHOC(Container: any, givenOptions?: ScrollableOptions) {
     const options = {
@@ -63,49 +80,27 @@ export default function scrollableHOC(Container: any, givenOptions?: ScrollableO
     return (props: React.PropsWithoutRef<any>) => {
         const containerRef = useRef<HTMLElement>(null)
         const containerDOM = containerRef?.current
-        const contentDOM = containerDOM?.children[0]
+        const contentDOM = containerDOM?.children[0] as HTMLElement
 
-        const [viewPosition, setViewPosition] = useState<ViewPosition>({ atTop: true, toBottom: ToBottom.InRange })
-
-        const calculateViewPosition = useCallback((): ViewPosition => {
-            if (!(containerDOM instanceof HTMLElement) || !(contentDOM instanceof HTMLElement)) return viewPosition
-
-            const { scrollTop } = containerDOM
-            const { height: containerH } = containerDOM.getBoundingClientRect()
-            const { height: contentH } = contentDOM.getBoundingClientRect()
-            // make sure the contain has no padding nor margin
-            const remainingH = Math.max(Math.floor(contentH - (scrollTop + containerH)), 0)
-            const atTop = scrollTop <= 0
-
-            if (remainingH <= 0) return { atTop, toBottom: ToBottom.InRange }
-            if (remainingH <= 2 * containerH) return { atTop, toBottom: ToBottom.Near }
-            return { atTop, toBottom: ToBottom.Far }
-        }, [containerDOM, contentDOM])
+        const [viewPosition, setViewPosition] = useState<ViewPosition>(DEFAULT_VIEW_POSITION)
 
         /**
          * Handler upon scroll, debounce
-         * TODO should be throttle instead of debounce
          */
         // eslint-disable-next-line react-hooks/exhaustive-deps
-        const onScroll = useCallback(
-            tailingDebounce(() => {
-                setViewPosition(calculateViewPosition())
-            }, 200),
-            [calculateViewPosition]
-        )
+        const onScroll = useCallback(() => {
+            setViewPosition(debouncedCalculateViewPosition(containerDOM, contentDOM) || DEFAULT_VIEW_POSITION)
+        }, [setViewPosition, containerDOM, contentDOM])
 
         useEffect(() => {
             if (containerDOM instanceof HTMLElement) {
                 containerDOM.addEventListener('scroll', onScroll)
-                observeDOM(containerDOM, tailingDebounce(() => {
-                    console.log('contain added')
-                    onScroll()
-                }, 200))
+                observeDOM(containerDOM, onScroll)
             }
             return () => {
                 containerDOM?.removeEventListener('scroll', onScroll)
             }
-        }, [containerDOM, onScroll])
+        }, [containerDOM, contentDOM, onScroll])
 
         return (
             <div className={options.style.wrapper}>
@@ -114,7 +109,6 @@ export default function scrollableHOC(Container: any, givenOptions?: ScrollableO
                 {viewPosition.toBottom !== ToBottom.InRange && <div className={options.style.tips.bottom}>Scroll down for older orders</div>}
             </div>
         )
-
 
         // const childrenWithProps = React.Children.map(children, child => {
         //     if (React.isValidElement(child)) {
