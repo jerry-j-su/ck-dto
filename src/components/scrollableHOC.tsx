@@ -57,7 +57,7 @@ function calculateViewPosition (containerDOM: HTMLElement, contentDOM: HTMLEleme
     const { height: contentH } = contentDOM.getBoundingClientRect()
     // make sure the contain has no padding nor margin
     const remainingH = Math.max(Math.floor(contentH - (scrollTop + containerH)), 0)
-    const atTop = scrollTop <= 30
+    const atTop = scrollTop <= 100
 
     if (remainingH <= 0) return { atTop, toBottom: ToBottom.InRange }
     if (remainingH <= 2 * containerH) return { atTop, toBottom: ToBottom.Near }
@@ -104,9 +104,9 @@ export default function scrollableHOC(Container: any, givenOptions?: ScrollableO
 
         return (
             <div className={options.style.wrapper}>
-                {!viewPosition.atTop && <div className={options.style.tips.top}>Scroll up for newer orders</div>}
+                {!viewPosition.atTop && <div className={options.style.tips.top}>newer orders</div>}
                 <Container {...props} ref={containerRef} holdAppendChild={viewPosition.toBottom === ToBottom.Far} />
-                {viewPosition.toBottom !== ToBottom.InRange && <div className={options.style.tips.bottom}>Scroll down for older orders</div>}
+                {viewPosition.toBottom !== ToBottom.InRange && <div className={options.style.tips.bottom}>more older orders</div>}
             </div>
         )
 

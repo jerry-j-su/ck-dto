@@ -127,6 +127,18 @@
         }
         &.end {
             min-height: 2rem;
+            margin-top: 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border: none;
+            border-radius: 5px;
+            background-color: color.scale(theme.$bg-front, $whiteness: 7%);
+            .loading-dot {
+                margin-inline: 2rem;
+            }
+            font-size: .8rem;
+            color: color.scale(theme.$border-fade, $blackness: 30%);
         }
     }
 }
@@ -135,14 +147,18 @@
     width: 100%;
     min-height: 0;
     position: relative;
-    .scrollable-tip {
-        &-top {
-            position: absolute;
-            top: 0;
-        }
-        &-bottom {
-            position: absolute;
-            bottom: 0;
-        }
+    .scrollable-tip-top, .scrollable-tip-bottom {
+        position: absolute;
+        left: -3.5rem;
+        color: #19c2c4;
+        font-size: .6rem;
+        width: 3rem;
+        text-align: right;
+    }
+    .scrollable-tip-top {
+        top: 0;
+    }
+    .scrollable-tip-bottom {
+        bottom: 0;
     }
 }
