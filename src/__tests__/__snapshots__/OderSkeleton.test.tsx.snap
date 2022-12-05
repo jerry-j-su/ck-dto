@@ -1,0 +1,18 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<OrderSkeleton Basic Rendering 1`] = `
+<React.Fragment>
+  <div
+    className="skeleton-title"
+  />
+  <div
+    className="skeleton-line"
+  />
+  <div
+    className="skeleton-line"
+  />
+  <div
+    className="skeleton-line"
+  />
+</React.Fragment>
+`;

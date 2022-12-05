@@ -1,18 +1,18 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect, useMemo, forwardRef } from 'react'
 
 import { OrderType } from '../types'
 import { ScrollableContainerExtraProps } from './dynamicScrollableListHOC'
 import OrderSkeleton from './OrderSkeleton'
+import { mergeClassNames } from '../utils'
 import './OrderList.scss'
 
 type OrderListProps = {
     orders: OrderType[],
     containerClassName?: string,
 }
-const UpdateBatchSize = 100  // how many buffered records to attach to DOM tree if user scroll down to the bottom of the page
+const UpdateBatchSize = 10  // how many buffered records to attach to DOM tree if user scroll down to the bottom of the page
 
-export default React.forwardRef(({ orders, containerClassName, holdAppendChild }: OrderListProps & ScrollableContainerExtraProps, ref: any) => {
-
+export default forwardRef(({ orders, containerClassName, holdAppendChild }: OrderListProps & ScrollableContainerExtraProps, ref: any) => {
     const [renderCount, setRenderCount] = useState<number>(0)
     useEffect(() => {
         if (holdAppendChild) return
@@ -26,29 +26,27 @@ export default React.forwardRef(({ orders, containerClassName, holdAppendChild }
     }, [orders, orders.length, renderCount]) // eslint-disable-line react-hooks/exhaustive-deps
 
     return (
-        <section className={['order-list-container', containerClassName || ''].join(' ')} ref={ref}>
+        <section className={mergeClassNames(['order-list-container', containerClassName])} ref={ref} tabIndex={0}>
             <ul className="order-list-body">
                 {ordersToShow.map(({ id, customer, destination, 'event_name': status, item, price, 'sent_at_second': time }) => (
                     <li className="order-wrapper" key={`${id}-${status}`}>
-                        <dl>
                             <div className="top-row">
-                                <dt className="label name">name</dt>
-                                <dd className="value name">{customer}</dd>
+                                <span className="label name">name</span>
+                                <span className="value name">{customer}</span>
                             </div>
                             <div className="name-spacer" />
                             <div className="col-1">
-                                <dt className="label status" style={{ display: 'none' }}>Status</dt>
-                                <dd className="value status">{status}</dd>
+                                <span className="label status" style={{ display: 'none' }}>Status</span>
+                                <span className="value status">{status}</span>
                             </div>
                             <div className="status-spacer" />
                             <div className="col-2">
-                                <dt className="label items">items</dt>
-                                <dd className="value items">{item}</dd>
+                                <span className="label items">items</span>
+                                <span className="value items">{item}</span>
                                 <div className="spacer" />
-                                <dt className="label price">price</dt>
-                                <dd className="value price">{price}</dd>
+                                <span className="label price">price</span>
+                                <span className="value price">{price}</span>
                             </div>
-                        </dl>
                     </li>
                 ))}
                 {/* DOM append is held due, display skeleton */}

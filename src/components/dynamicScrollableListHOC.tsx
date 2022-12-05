@@ -12,7 +12,7 @@ import { mergeClassNames, observeDOM, throttle } from '../utils/misc'
 export type ScrollableOptions = {
     interval?: number,
 }
-enum ToBottom { InRange, Near, Far }
+export enum ToBottom { InRange, Near, Far }
 export type ViewPosition = {
     atTop: boolean,
     toBottom: ToBottom,
@@ -45,7 +45,7 @@ Object.freeze(DEFAULT_VIEW_POSITION)
  * @param {HTMLElement} contentDOM - the long DOM that holds large amount of content
  * @returns
  */
-function calculateViewPosition (containerDOM: HTMLElement, contentDOM: HTMLElement): ViewPosition {
+export function calculateViewPosition (containerDOM: HTMLElement, contentDOM: HTMLElement): ViewPosition {
     if (!(containerDOM instanceof HTMLElement) || !(contentDOM instanceof HTMLElement)) return DEFAULT_VIEW_POSITION
 
     // console.log('calculating view position')
@@ -117,7 +117,7 @@ export default function dynamicScrollableListHOC(Container: any, options?: Scrol
 
         useEffect(() => {
             let observer: MutationObserver | undefined
-            if (containerDOM instanceof HTMLElement) {
+            if (containerDOM) {
                 containerDOM.addEventListener('scroll', onScrollOrContentChange)
                 observer = observeDOM(containerDOM, onScrollOrContentChange)
             }

@@ -22,7 +22,12 @@ jest.mock('../state/useOrders', () => ({
     __esModule: true,
     default: () => ({
         connectOrderFlowSocket: mockConnectOrderFlowSocket,
+        orderList: mockOrders,
     })
+}))
+jest.mock('../components/dynamicScrollableListHOC', () => ({
+    __esModule: true,
+    default: (WrappedComponent: any) => (props: any) => <WrappedComponent {...props} />
 }))
 // data mocks
 const mockOrders = JSON.parse(readFileSync(`${__dirname}/dummyOrders.json`, { encoding: 'utf-8' }))

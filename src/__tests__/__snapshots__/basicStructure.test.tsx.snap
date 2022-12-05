@@ -1,242 +1,24 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`High-level Component render before actual DOM Order List basic render 1`] = `
-<div>
-  <section
-    class="order-list-container"
-  >
-    <span
-      class="order-count"
-    >
-      Total undefined orders
-    </span>
-    <ul
-      class="order-list-body"
-    >
-      <li
-        class="order-wrapper"
-      >
-        <dl>
-          <div
-            class="top-row"
-          >
-            <dt
-              class="label name"
-            >
-              name
-            </dt>
-            <dd
-              class="value name"
-            >
-              Derek Marshall
-            </dd>
-          </div>
-          <div
-            class="name-spacer"
-          />
-          <div
-            class="col-1"
-          >
-            <dt
-              class="label status"
-              style="display: none;"
-            >
-              Status
-            </dt>
-            <dd
-              class="value status"
-            >
-              DRIVER_RECEIVED
-            </dd>
-          </div>
-          <div
-            class="status-spacer"
-          />
-          <div
-            class="col-2"
-          >
-            <dt
-              class="label items"
-            >
-              items
-            </dt>
-            <dd
-              class="value items"
-            >
-              Orange chicken
-            </dd>
-            <div
-              class="spacer"
-            />
-            <dt
-              class="label price"
-            >
-              price
-            </dt>
-            <dd
-              class="value price"
-            >
-              4775
-            </dd>
-          </div>
-        </dl>
-      </li>
-      <li
-        class="order-wrapper"
-      >
-        <dl>
-          <div
-            class="top-row"
-          >
-            <dt
-              class="label name"
-            >
-              name
-            </dt>
-            <dd
-              class="value name"
-            >
-              Derek Marshall
-            </dd>
-          </div>
-          <div
-            class="name-spacer"
-          />
-          <div
-            class="col-1"
-          >
-            <dt
-              class="label status"
-              style="display: none;"
-            >
-              Status
-            </dt>
-            <dd
-              class="value status"
-            >
-              DELIVERED
-            </dd>
-          </div>
-          <div
-            class="status-spacer"
-          />
-          <div
-            class="col-2"
-          >
-            <dt
-              class="label items"
-            >
-              items
-            </dt>
-            <dd
-              class="value items"
-            >
-              Orange chicken
-            </dd>
-            <div
-              class="spacer"
-            />
-            <dt
-              class="label price"
-            >
-              price
-            </dt>
-            <dd
-              class="value price"
-            >
-              4775
-            </dd>
-          </div>
-        </dl>
-      </li>
-      <li
-        class="order-wrapper"
-      >
-        <dl>
-          <div
-            class="top-row"
-          >
-            <dt
-              class="label name"
-            >
-              name
-            </dt>
-            <dd
-              class="value name"
-            >
-              Kevin Thornton
-            </dd>
-          </div>
-          <div
-            class="name-spacer"
-          />
-          <div
-            class="col-1"
-          >
-            <dt
-              class="label status"
-              style="display: none;"
-            >
-              Status
-            </dt>
-            <dd
-              class="value status"
-            >
-              CREATED
-            </dd>
-          </div>
-          <div
-            class="status-spacer"
-          />
-          <div
-            class="col-2"
-          >
-            <dt
-              class="label items"
-            >
-              items
-            </dt>
-            <dd
-              class="value items"
-            >
-              Impossible beef burger
-            </dd>
-            <div
-              class="spacer"
-            />
-            <dt
-              class="label price"
-            >
-              price
-            </dt>
-            <dd
-              class="value price"
-            >
-              7257
-            </dd>
-          </div>
-        </dl>
-      </li>
-    </ul>
-  </section>
-</div>
-`;
-
 exports[`High-level Component render before actual DOM SearchBox Input box basic render 1`] = `
 <div>
   <div
     class="search-input"
-    tabindex="0"
   >
     <input
-      type="combobox"
+      aria-errormessage="search-error-msg"
+      aria-invalid="false"
+      aria-label="Input price to search among orders"
+      type="text"
       value="3"
     />
-    <div
+    <button
+      aria-label="clear search"
       class="search-clear"
+      type="button"
     >
       X
-    </div>
+    </button>
   </div>
 </div>
 `;
@@ -248,10 +30,12 @@ exports[`High-level Component render before actual DOM SearchBox basic render 1`
   >
     <div
       class="search-input"
-      tabindex="0"
     >
       <input
-        type="combobox"
+        aria-errormessage="search-error-msg"
+        aria-invalid="false"
+        aria-label="Input price to search among orders"
+        type="text"
         value=""
       />
     </div>

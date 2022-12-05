@@ -40,9 +40,4 @@ describe('High-level Component render before actual DOM', () => {
         const nodes = render(SearchBox())
         expect(nodes.container).toMatchSnapshot()
     })
-
-    test('Order List basic render', () => {
-        const nodeTree = render(OrderList())
-        expect(nodeTree.container).toMatchSnapshot()
-    })
 })

@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<OrderList> Render tests Basic render 1`] = `
+<section
+  className="order-list-container dummy-container"
+  tabIndex={0}
+>
+  <ul
+    className="order-list-body"
+  >
+    <li
+      className="order-wrapper"
+    >
+      <div
+        className="top-row"
+      >
+        <span
+          className="label name"
+        >
+          name
+        </span>
+        <span
+          className="value name"
+        >
+          Derek Marshall
+        </span>
+      </div>
+      <div
+        className="name-spacer"
+      />
+      <div
+        className="col-1"
+      >
+        <span
+          className="label status"
+          style={
+            Object {
+              "display": "none",
+            }
+          }
+        >
+          Status
+        </span>
+        <span
+          className="value status"
+        >
+          DELIVERED
+        </span>
+      </div>
+      <div
+        className="status-spacer"
+      />
+      <div
+        className="col-2"
+      >
+        <span
+          className="label items"
+        >
+          items
+        </span>
+        <span
+          className="value items"
+        >
+          Orange chicken
+        </span>
+        <div
+          className="spacer"
+        />
+        <span
+          className="label price"
+        >
+          price
+        </span>
+        <span
+          className="value price"
+        >
+          4775
+        </span>
+      </div>
+    </li>
+    <li
+      className="order-wrapper end"
+    >
+      <div
+        className="loading-dot"
+      />
+    </li>
+  </ul>
+</section>
+`;

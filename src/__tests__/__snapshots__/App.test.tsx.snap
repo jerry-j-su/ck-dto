@@ -16,25 +16,36 @@ exports[`App.tsx App basic render 1`] = `
       >
         <div
           class="search-input"
-          tabindex="0"
         >
           <input
-            type="combobox"
+            aria-errormessage="search-error-msg"
+            aria-invalid="false"
+            aria-label="Input price to search among orders"
+            type="text"
             value=""
           />
         </div>
       </section>
+      <span
+        class="order-count"
+      >
+        Total undefined orders
+      </span>
       <section
         class="order-list-container"
+        tabindex="0"
       >
-        <span
-          class="order-count"
-        >
-          Total undefined orders
-        </span>
         <ul
           class="order-list-body"
-        />
+        >
+          <li
+            class="order-wrapper end"
+          >
+            <div
+              class="loading-dot"
+            />
+          </li>
+        </ul>
       </section>
     </main>
   </div>

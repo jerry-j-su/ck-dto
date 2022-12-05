@@ -7,6 +7,13 @@ import { debounce } from '../utils'
 import useOrders from '../state/useOrders'
 import './SearchBox.scss'
 
+type InputBoxProps = {
+    value: string,
+    onInput: FormEventHandler,
+    clearInput: FormEventHandler,
+    isInvalid?: boolean,
+}
+
 /**
  * Validate price input value
  * Currently it only allows pure number
@@ -16,13 +23,21 @@ function validatePriceInput(rawValue: string) {
     return /^\s*\d*\.?\d*\s*$/.test(rawValue)
 }
 
-export function InputBox({ value, onInput, clearInput }: { value: string, onInput: FormEventHandler, clearInput: FormEventHandler }) {
+export function InputBox({ value, onInput, clearInput, isInvalid = false }: InputBoxProps) {
     const inputDOM = useRef<HTMLInputElement>(null)
     return (
-        <div className="search-input" tabIndex={0}>
+        <div className="search-input">
             {!(inputDOM.current && inputDOM.current.value) && <div className="search-placeholder">Enter price to search among orders...</div>}
-            <input type="combobox" value={value} onInput={onInput} ref={inputDOM} />
-            {value && <div className="search-clear" onClick={clearInput}>X</div>}
+            <input
+                type="text"
+                value={value}
+                onInput={onInput}
+                ref={inputDOM}
+                aria-label="Input price to search among orders"
+                aria-invalid={isInvalid}
+                aria-errormessage="search-error-msg"
+            />
+            {value && <button type="button" className="search-clear" onClick={clearInput} aria-label="clear search">X</button>}
         </div>
     )
 }
@@ -31,6 +46,7 @@ export default function SearchBox() {
     const [searchStr, setSearchStr] = useState<string>('')
     const [warnMsg, setWarnMsg] = useState<string>('')
     const { setFilterCriteria } = useOrders()
+    const inputInvalid = !!warnMsg
 
     /**
      * Perform an order search, debounced, trailing, 500ms
@@ -68,8 +84,8 @@ export default function SearchBox() {
 
     return (
         <section className="search-container">
-            <InputBox value={searchStr} onInput={onSearchInput} clearInput={clear} />
-            {warnMsg && <div className="search-notification">{warnMsg}</div>}
+            <InputBox value={searchStr} onInput={onSearchInput} clearInput={clear} isInvalid={inputInvalid} />
+            {inputInvalid && <div id="search-error-msg" className="search-notification">{warnMsg}</div>}
         </section>
     )
 }

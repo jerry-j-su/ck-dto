@@ -50,7 +50,6 @@ export default function useOrders() {
     const addOrder = (orderEntry: OrderType) => {
         const { id, price, ...rest } = orderEntry
         orderStorage.add({ id, price, ...rest })
-        setOrderList(orderStorage.toArray())
         idMap.set(id, orderStorage.length - 1)
         priceMap.put(price, orderStorage.length - 1)
         setLastUpdate(new Date().valueOf())
@@ -65,7 +64,6 @@ export default function useOrders() {
         if (orderIndex === undefined) return
 
         orderStorage.set(orderIndex, { ...orderStorage.get(orderIndex), ...info } as OrderType)
-        setOrderList(orderStorage.toArray())
         setLastUpdate(new Date().valueOf())
     }
 
@@ -109,6 +107,7 @@ export default function useOrders() {
                 // TODO basic order validation
                 processSingleOrder(orderEntry)
             })
+            setOrderList(orderStorage.toArray())
 
             // console.log(`>>> Received ${newOrder} new orders and updated ${packetCount - newOrder} at second: ${secondStamp}`)
             // console.log(orderPacket)
@@ -129,7 +128,7 @@ export default function useOrders() {
     }, [orderList, orderList.length, filterCriteria, setFilteredOrderList])
 
     return {
-        idMap, orderList, filteredOrderList, orderCount,
+        orderList, filteredOrderList, orderCount,
         connectOrderFlowSocket, setFilterCriteria, setFilteredOrderList,
     }
 }

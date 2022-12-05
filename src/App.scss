@@ -2,6 +2,7 @@
 @use './theme.scss';
 
 .App {
+    width: fit-content;
     min-width: 680px;
     height: 100vh;
     box-sizing: border-box;
