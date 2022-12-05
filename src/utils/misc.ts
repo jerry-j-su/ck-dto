@@ -118,7 +118,7 @@ export const observeDOM = (() => {
         if (!(ele instanceof HTMLElement) || ele.nodeType !== 1) return
 
         if (MutationObserver) {
-            const mutationObserver = new MutationObserver((mutationList: MutationRecord[]) => {
+            const mutationObserver = new MutationObserver(() => {
                 callback()
             })
 

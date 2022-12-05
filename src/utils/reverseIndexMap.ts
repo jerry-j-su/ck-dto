@@ -1,5 +1,6 @@
 /**
  * Inverse index hash table for quick search
+ * Supports multiple items under the same key (key -> bucket of items)
  */
 function reverseIndexMap<KeyType, I> () {
     const _map = new Map<KeyType, I[]>()
@@ -26,7 +27,7 @@ function reverseIndexMap<KeyType, I> () {
 
         keys: _map.keys.bind(_map),
 
-        /* methods that are not needed */
+        /* methods that are not needed at the moment */
 
         // size(key: KeyType) {
         //     if (key) return (_map.get(key) || []).length

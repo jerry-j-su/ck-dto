@@ -3,7 +3,10 @@
  */
 import { useEffect, useCallback } from 'react'
 
-import { simpleUID, createGlobalPersistentState, reverseIndexMap } from '../utils'
+import {
+    simpleUID, createGlobalPersistentState,
+    fixed2DArray, reverseIndexMap
+} from '../utils'
 import { OrderType, OrderFilterCriteria } from '../types'
 import { OrderEvent, orderFlowSocket } from '../service'
 
@@ -11,23 +14,26 @@ import { OrderEvent, orderFlowSocket } from '../service'
  * Globalized order states
  */
 const useSocketConnection = createGlobalPersistentState<boolean>(() => false)
-const useGlobalOrderMap = createGlobalPersistentState<Map<string, number>>(() => new Map())
-const useGlobalOrderList = createGlobalPersistentState<OrderType[]>(() => [])
+const useGlobalOrderList = createGlobalPersistentState<OrderType[]>([])
 const useOrderCount = createGlobalPersistentState<number>(() => 0)
 const useFilterCriteria = createGlobalPersistentState<OrderFilterCriteria>(() => ({}))
 const useFilteredOrderList = createGlobalPersistentState<OrderType[] | undefined>(() => [])
 const useLastUpdate = createGlobalPersistentState<number>(() => Date.now())
 
-/**
- * Reverse Index for search
+
+/* Order Storage with Fixed-Width 2-Dimensional Array */
+const orderStorage = fixed2DArray<OrderType>({ blockSize: 1000 })
+
+/*
+ * Reverse Index Map for search
+ * price -> index(es) for quick price search, one-to-multiple mapping
+ * id -> index for quick id search, one-to-one mapping
  */
 const priceMap = reverseIndexMap<OrderType['price'], number>()
-// @ts-ignore
-window.priceMap = priceMap
+const idMap = new Map<OrderType['id'], number>()
 
 export default function useOrders() {
     const [socketConnected, setConnection] = useSocketConnection()
-    const [orderMap, setOrderMap] = useGlobalOrderMap()
     const [orderList, setOrderList] = useGlobalOrderList()
     const [orderCount, setOrderCount] = useOrderCount()
     const [filterCriteria, setFilterCriteria] = useFilterCriteria()
@@ -36,33 +42,30 @@ export default function useOrders() {
     // last update time stamp, also an indicator to inform re-rendering of underlying components
     const [lastUpdate, setLastUpdate] = useLastUpdate()
 
-    useEffect(() => setOrderCount(orderMap.size), [setOrderCount, orderMap, lastUpdate])
+    useEffect(() => setOrderCount(orderList.length), [setOrderCount, orderList, lastUpdate])
 
     /**
      * Register a new order
      */
     const addOrder = (orderEntry: OrderType) => {
         const { id, price, ...rest } = orderEntry
-        orderList.push({ id, price, ...rest })
-        setOrderList(orderList)
-        orderMap.set(id, orderList.length - 1)
-        setOrderMap(orderMap)
-        priceMap.put(price, orderList.length - 1)
+        orderStorage.add({ id, price, ...rest })
+        setOrderList(orderStorage.toArray())
+        idMap.set(id, orderStorage.length - 1)
+        priceMap.put(price, orderStorage.length - 1)
         setLastUpdate(new Date().valueOf())
     }
 
     /**
      * Updates an existing order
-     * @param {string} orderId
+     * @param {number} orderIndex
      * @param {OrderType} info
      */
-    const updateOrder = (orderId: string, info: Partial<OrderType>) => {
-        const orderIndex = orderMap.get(orderId)
+    const updateOrder = (orderIndex: number, info: Partial<OrderType>) => {
         if (orderIndex === undefined) return
 
-        // TODO create hook for a single order type to implement dual data binding
-        orderList[orderIndex] = { ...orderList[orderIndex], ...info }
-        setOrderList(orderList)
+        orderStorage.set(orderIndex, { ...orderStorage.get(orderIndex), ...info } as OrderType)
+        setOrderList(orderStorage.toArray())
         setLastUpdate(new Date().valueOf())
     }
 
@@ -74,7 +77,8 @@ export default function useOrders() {
         const { id } = orderEntry
         if (!id) return
 
-        if (orderMap.has(id)) updateOrder(id, orderEntry)
+        const orderIndex = idMap.get(id)
+        if (orderIndex || orderIndex === 0) updateOrder(orderIndex, orderEntry)
         else addOrder(orderEntry)
     }
 
@@ -99,7 +103,7 @@ export default function useOrders() {
             // const secondStamp = orderPacket[0]['sent_at_second']
             // let newOrder = 0
             orderPacket.forEach((orderEntry: OrderType) => {
-                // if (!orderMap.has(orderEntry.id)) {
+                // if (!idMap.get(orderEntry.id)) {
                 //     newOrder ++
                 // }
                 // TODO basic order validation
@@ -107,34 +111,37 @@ export default function useOrders() {
             })
 
             // console.log(`>>> Received ${newOrder} new orders and updated ${packetCount - newOrder} at second: ${secondStamp}`)
+            // console.log(orderPacket)
         })
         setConnection(true)
-    /* eslint-disable-next-line react-hooks/exhaustive-deps  */
+        /* eslint-disable-next-line react-hooks/exhaustive-deps  */
     }, [])
 
     /**
      * Filter orders by the given criteria
+     * (Currently on ly price filter is in-scope and supported, can be enhanced to cater keyword search for other order fields)
      * price must be exact match, while other properties are loosely match
      * @param {OrderFilterCriteria} criteria
      */
     useEffect(() => {
-        const filteredList = filterOrderListByPrice(orderList, filterCriteria.price);
+        const filteredList = filterOrderListByPrice(filterCriteria.price);
         setFilteredOrderList(filteredList)
     }, [orderList, orderList.length, filterCriteria, setFilteredOrderList])
 
     return {
-        orderMap, orderList, filteredOrderList, orderCount,
+        idMap, orderList, filteredOrderList, orderCount,
         connectOrderFlowSocket, setFilterCriteria, setFilteredOrderList,
     }
 }
 
 /**
- * Filter the order list under given criteria
- * @param {OrderType[]} orderList
+ * Filter the order list by price
  * @param {OrderType.price} price
  */
-export function filterOrderListByPrice(orderList: OrderType[], price?: OrderType['price']) {
+export function filterOrderListByPrice(price?: OrderType['price']): OrderType[] | undefined {
     if (typeof price !== 'number') return undefined
-    const indexes =  priceMap.get(price)
-    return Array.isArray(indexes) ? indexes.map(index => orderList[index]) : []
+    const indexes = priceMap.get(price)
+    return Array.isArray(indexes)
+        ? indexes.map(index => orderStorage.get(index)).filter(Boolean) as OrderType[]
+        : []
 }

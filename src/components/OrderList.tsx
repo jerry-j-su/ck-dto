@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react'
 
 import { OrderType } from '../types'
-import { ScrollableContainerExtraProps } from './scrollableHOC'
+import { ScrollableContainerExtraProps } from './dynamicScrollableListHOC'
+import OrderSkeleton from './OrderSkeleton'
 import './OrderList.scss'
 
 type OrderListProps = {
@@ -50,11 +51,11 @@ export default React.forwardRef(({ orders, containerClassName, holdAppendChild }
                         </dl>
                     </li>
                 ))}
-                {renderCount < orders.length
+                {/* DOM append is held due, display skeleton */}
+                {holdAppendChild && renderCount < orders.length
                     ? (<>
-                        <li className="order-wrapper scaffold">Rendering...</li>
-                        <li className="order-wrapper scaffold">Rendering...</li>
-                        <li className="order-wrapper scaffold">Rendering...</li>
+                        <li className="order-wrapper skeleton"><OrderSkeleton /></li>
+                        <li className="order-wrapper skeleton"><OrderSkeleton /></li>
                       </>)
                     : <li className="order-wrapper end"><div className="loading-dot" /></li>
                 }

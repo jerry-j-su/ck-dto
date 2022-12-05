@@ -1,3 +1,5 @@
 export * from './misc'
 export { default as createGlobalPersistentState } from './createGlobalPersistentState'
+export { default as fixed2DArray } from './fixed2DArray'
+export * from './fixed2DArray'
 export { default as reverseIndexMap } from './reverseIndexMap'

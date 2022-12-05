@@ -1,12 +1,18 @@
 // Very basic theming for the app
 @use 'sass:color';
 
-/* Font */
+/**
+ * ==============================================
+ * Fonts
+ * ==============================================
+ */
 
 
-
-
-/* Colors */
+/**
+ * ==============================================
+ * Colors
+ * ==============================================
+ */
 $dark-bg: #050d22;
 $bg-front: #0c162d;
 $font-primary-strong: #19c2c4;
@@ -25,11 +31,9 @@ $color-warn-primary: #f78166;
     color: $primary;
 }
 
-
-/* Effects */
 /**
  * ==============================================
- * Dot Elastic
+ * Effects
  * ==============================================
  */
 .loading-dot {
@@ -70,6 +74,11 @@ $color-warn-primary: #f78166;
     animation: loadingDotAfter 1s infinite linear;
 }
 
+/**
+ * ==============================================
+ * Animations
+ * ==============================================
+ */
 @keyframes loadingDotBefore {
     0% {
         transform: scale(1, 1);
@@ -135,5 +144,3 @@ $color-warn-primary: #f78166;
         transform: scale(1, 1);
     }
 }
-
-/* Animations */

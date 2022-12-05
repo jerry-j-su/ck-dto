@@ -2,15 +2,11 @@
 @use '../theme.scss';
 
 .order-list-container {
-    &.hidden {
-        // visibility: hidden!important;
-        // height: 0!important;
-        display:none;
-    }
-
     height: 100%;
     overflow: hidden auto;
-    scrollbar-gutter: stable both-edges; // very important, prevent visible scroll bar causing inner content to reflow/repaint
+    // very important, prevent visible scroll bar causing inner content to reflow/repaint
+    // scrollbar-gutter: stable both-edges;
+    scrollbar-gutter: stable;
     &::-webkit-scrollbar {
         // display: none;
         width: 5px;
@@ -24,11 +20,9 @@
         border-radius: 2px;
         background-color: theme.$font-primary-strong;
     }
-
-    .order-count {
-        font-size: .8rem;
-        color: theme.$font-fade;
-    }
+    // firefox scroll bar
+    scrollbar-color: theme.$font-primary-strong color.scale(theme.$bg-front, $whiteness: 7%);
+    scrollbar-width: thin;
 
     .order-list-body {
         padding: 0;
@@ -122,8 +116,22 @@
             }
         }
 
-        &.scaffold {
+        &.skeleton {
             min-height: 3rem;
+            padding: .5rem;
+
+            .skeleton-title {
+                min-height: .8rem;
+                max-width: 5rem;
+                background-color: color.adjust(theme.$font-primary-strong, $alpha: -0.85);
+                margin-bottom: 6px;
+            }
+            .skeleton-line {
+                min-height: .4rem;
+                max-width: 75%;
+                background-color: color.adjust(theme.$primary, $alpha: -0.85);
+                margin-bottom: 4px;
+            }
         }
         &.end {
             min-height: 2rem;
@@ -149,16 +157,31 @@
     position: relative;
     .scrollable-tip-top, .scrollable-tip-bottom {
         position: absolute;
-        left: -3.5rem;
+        left: -3rem;
         color: #19c2c4;
         font-size: .6rem;
         width: 3rem;
         text-align: right;
+        max-width: 2.5rem;
     }
     .scrollable-tip-top {
         top: 0;
+        .arrow-up {
+            display: inline-block;
+            transform: rotate(-90deg);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-inline-end: .1rem;
+        }
     }
     .scrollable-tip-bottom {
         bottom: 0;
+        .arrow-down {
+            display: inline-block;
+            transform: rotate(-90deg);
+            font-size: 1rem;
+            font-weight: 700;
+            margin-inline-end: .1rem;
+        }
     }
 }
