@@ -3,7 +3,7 @@ useCallback, useState, useRef,
 FormEvent, FormEventHandler,
 } from 'react'
 
-import { debounce } from '../utils'
+import { debounce, mergeClassNames } from '../utils'
 import useOrders from '../state/useOrders'
 import './SearchBox.scss'
 
@@ -26,7 +26,7 @@ function validatePriceInput(rawValue: string) {
 export function InputBox({ value, onInput, clearInput, isInvalid = false }: InputBoxProps) {
     const inputDOM = useRef<HTMLInputElement>(null)
     return (
-        <div className="search-input">
+        <div className={mergeClassNames(['search-input', isInvalid ? 'invalid' : ''])}>
             {!(inputDOM.current && inputDOM.current.value) && <div className="search-placeholder">Enter price to search among orders...</div>}
             <input
                 type="text"
@@ -78,7 +78,7 @@ export default function SearchBox() {
             const price = parseInt(rawInput) || undefined
             performSearch(price)
         } else {
-            setWarnMsg('Invalid price amount')
+            setWarnMsg('Invalid format. Only price search is supported at the moment, please enter number only')
         }
     }, [setSearchStr, performSearch])
 

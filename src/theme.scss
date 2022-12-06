@@ -6,7 +6,10 @@
  * Fonts
  * ==============================================
  */
-
+html {
+    // the unit base as this app uses 'rem' mostly
+    font-size: 14px;
+}
 
 /**
  * ==============================================
@@ -144,3 +147,34 @@ $color-warn-primary: #f78166;
         transform: scale(1, 1);
     }
 }
+
+@keyframes shakeOnError {
+    0% {
+        margin-left: 0rem;
+    }
+
+    25% {
+        margin-left: 0.5rem;
+    }
+
+    75% {
+        margin-left: -0.5rem;
+    }
+
+    100% {
+        margin-left: 0rem;
+    }
+}
+
+
+/**
+ * ==============================================
+ * Layout
+ * ==============================================
+ */
+
+@media (min-width: 768px) {}
+
+
+
+@media (min-width: 1012px) {}

@@ -151,6 +151,8 @@
     width: 100%;
     min-height: 0;
     position: relative;
+    padding-top: 0.5rem;
+    border-top: 1px dashed color.adjust(theme.$border-fade, $alpha: -.7);
     .scrollable-tip-top, .scrollable-tip-bottom {
         position: absolute;
         left: -3rem;

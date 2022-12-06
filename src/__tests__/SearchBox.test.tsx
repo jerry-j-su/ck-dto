@@ -27,20 +27,17 @@ jest.mock('../state/useOrders', () => ({
 }))
 jest.mock('../utils', () => ({
     __esModule: true,
+    ...jest.requireActual('../utils'),
     debounce: (func: Function) => func,
 }))
 // data mocks
 const mockOrders = JSON.parse(readFileSync(`${__dirname}/dummyOrders.json`, { encoding: 'utf-8' }))
 
 describe('SearchBox logics', () => {
-    let searchBoxContainer: HTMLElement
-    let inputElement: HTMLInputElement
-    beforeEach(() => {
-        searchBoxContainer = render(SearchBox())?.container
-        inputElement = searchBoxContainer.querySelector('input') as HTMLInputElement
-    })
-
     test('SearchBox can perform a search with input content', async () => {
+        const searchBoxContainer = render(SearchBox())?.container
+        // eslint-disable-next-line testing-library/no-node-access
+        const inputElement = searchBoxContainer.querySelector('input') as HTMLInputElement
         const inputValue = '328'
         if (inputElement) {
             fireEvent.input(inputElement, { target: { value: inputValue } })
@@ -49,6 +46,9 @@ describe('SearchBox logics', () => {
     })
 
     test('Validate', () => {
+        const searchBoxContainer = render(SearchBox())?.container
+        // eslint-disable-next-line testing-library/no-node-access
+        const inputElement = searchBoxContainer.querySelector('input') as HTMLInputElement
         if (inputElement) {
             fireEvent.input(inputElement, { target: { value: '3124abc' } })
         }
